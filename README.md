@@ -2,89 +2,99 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>KILLER TERMINAL</title>
+<title>KCR Sistem</title>
 
 <style>
-body{
-  margin:0;
-  background:black;
+body {
+  margin: 0;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: monospace;
-  height:100vh;
-  overflow:hidden;
+  color: #00ff88;
 }
 
-#terminal{
-  padding:20px;
-  white-space: pre-line;
-  font-size:15px;
-  color:#00ff66;
-  text-shadow: 0 0 8px #00ff66;
+.kutu {
+  background: rgba(0,0,0,0.85);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 25px #00ff88;
+  width: 320px;
 }
 
-.cursor{
-  display:inline-block;
-  width:10px;
-  height:18px;
-  background:#00ff66;
-  animation:blink 1s infinite;
+button {
+  margin-top: 20px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  background: #00ff88;
+  color: black;
 }
 
-@keyframes blink{
-  0%,50%{opacity:1}
-  51%,100%{opacity:0}
+#log {
+  margin-top: 15px;
+  text-align: left;
+  max-height: 180px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.titre {
+  animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, -1px); }
+  100% { transform: translate(1px, -1px); }
 }
 </style>
 </head>
 
 <body>
 
-<div id="terminal"></div>
+<div class="kutu">
+  <h2>KCR KONTROL PANELİ</h2>
+  <button onclick="bas()">BAŞLAT</button>
+  <div id="log"></div>
+</div>
 
 <script>
-const terminal = document.getElementById("terminal");
+let adim = 0;
 
-const satirlar = [
-  "KILLER CORE v7.0",
-  "--------------------------------",
-  "Bağlantı kuruluyor...",
-  "Gizli protokol aktif ✔",
-  "",
-  "KILLERIM SAYFASINA HOŞ GELDİN",
-  "",
-  "Kod kralı burada yazıyor.",
-  "Sessiz. Hızlı. Görünmez.",
-  "",
-  "KILLER bir isim değildir.",
-  "KILLER karanlıkta bırakılan izdir.",
-  "KILLER sistemlerin korkusudur.",
-  "",
-  "Loglar silindi.",
-  "İz bırakılmadı.",
-  "Takip: KAPALI",
-  "",
-  "Erişim seviyesi: MAKSİMUM",
-  "Yetki: SINIRSIZ",
-  "",
-  "Unutma:",
-  "Kod konuşur.",
-  "Diğerleri sadece izler.",
-  "",
-  ">> KILLER BEKLİYOR _"
+const mesajlar = [
+  ">> Sistem başlatılıyor...",
+  ">> Kullanıcı tespit edildi",
+  ">> Adı: Cartios",
+  ">> Grup: KCR",
+  ">> Yetkiler kontrol ediliyor...",
+  ">> Erişim KCR grubuna ait ✔",
+  ">> İşlem başarıyla tamamlandı 😎",
+  ">> Hoş geldin Cartios | KCR 🔥"
 ];
 
-let i = 0;
+function bas() {
+  document.body.classList.add("titre");
+  const log = document.getElementById("log");
 
-function yaz(){
-  if(i < satirlar.length){
-    terminal.innerHTML += satirlar[i] + "\n";
-    i++;
-    setTimeout(yaz, 450);
-  } else {
-    terminal.innerHTML += "<span class='cursor'></span>";
-  }
+  log.innerHTML = ""; // tekrar basınca sıfırlansın
+  adim = 0;
+
+  const interval = setInterval(() => {
+    log.innerHTML += mesajlar[adim] + "<br>";
+    adim++;
+
+    if (adim === mesajlar.length) {
+      clearInterval(interval);
+      document.body.classList.remove("titre");
+    }
+  }, 650);
 }
-
-yaz();
 </script>
 
 </body>
